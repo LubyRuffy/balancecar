@@ -118,7 +118,21 @@ gy_total = (last_y) - gyro_offset_y
 time_diff = 0.04
 K = 0.98
 
-PID1 = PIDController(P=-35, I=-1.5, D=-0.1)
+#PID1 = PIDController(P=-40, I=-100, D=-2.5)
+#PID1 = PIDController(P=-42, I=-10, D=-5)
+
+#PID1 = PIDController(P=-32, I=-1, D=-5)
+#PID1 = PIDController(P=-25, I=-4.5, D=-5)
+
+#PID1 = PIDController(P=-25, I=-0.04, D=-8)
+
+
+
+PID1 = PIDController(P=-18, I=-0.01, D=0)
+
+
+
+
 PID1.setTarget(7.5)
 targetvalue = 7 
 while True:
@@ -187,7 +201,7 @@ while True:
 								
 
 
-		time.sleep(0.04)
+		time.sleep(0.01)
 	except KeyboardInterrupt:
 		pwm_a.stop()
 		pwm_b.stop()
