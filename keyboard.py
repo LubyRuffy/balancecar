@@ -1,20 +1,13 @@
-import curses
+import tty
+import sys
+import termios
 
-def main(win):
-    win.nodelay(True)
-    key=""
-    win.clear()                
-    win.addstr("Detected key:")
-    while 1:          
-        try:                 
-           key = win.getkey()         
-           win.clear()                
-           win.addstr("Detected key:")
-           win.addstr(str(key)) 
-           if key == os.linesep:
-              break           
-        except Exception as e:
-           # No input   
-           pass         
+orig_settings = termios.tcgetattr(sys.stdin)
 
-curses.wrapper(main)
+tty.setraw(sys.stdin)
+x = 0
+while x != chr(27): # ESC
+    x=sys.stdin.read(1)[0]
+    print("You pressed", x)
+
+termios.tcsetattr(sys.stdin, termios.TCSADRAIN, orig_settings) 
