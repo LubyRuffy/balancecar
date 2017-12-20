@@ -20,13 +20,16 @@ if 1:
         return ch
 
     def kbdListener():
+        global kbdInput, finished
         kbdInput = getch()
         finished = True
 
+
+if __name__ == "__main__":
     while 1:
         if finished:
             finished = False
             listener = threading.Thread(target=kbdListener)
             listener.start()
         time.sleep(0.2)
-        print kbdInput      
+        print kbdInput     
