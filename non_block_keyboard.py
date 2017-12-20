@@ -4,7 +4,6 @@ import sys, termios, tty, os
 
 
 kbdInput = ''
-playingID = ''
 finished = True
 
 def getch():
@@ -19,18 +18,14 @@ def getch():
     return ch
 
 def kbdListener():
-    global kbdInput, finished
     kbdInput = getch()
     finished = True
 
-
+k=1
 while True:
-    if playingID != kbdInput:
-        playingID = kbdInput
-    if kbdInput == 's':
-        print "s\n"
     if finished:
         finished = False
         listener = threading.Thread(target=kbdListener)
         listener.start()
+    print kbdInput
     time.sleep(0.2)
