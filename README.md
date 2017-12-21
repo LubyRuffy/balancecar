@@ -9,4 +9,8 @@ Afterwards just do the same thing with the pidcontroller.py (create a python fil
 
 Most likely you are also going to need to change the PID values in the file equsant.py 
 
-Enjoy 
+Enjoy
+# support
+- PID control
+- keyboard control
+ 
