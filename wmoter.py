@@ -115,7 +115,7 @@ gx_total = (last_x) - gyro_offset_x
 gy_total = (last_y) - gyro_offset_y
 
 
-time_diff = 0.04
+time_diff = 0.035
 K = 0.98
 
 #PID1 = PIDController(P=-40, I=-100, D=-2.5)
@@ -128,13 +128,17 @@ K = 0.98
 
 
 
-PID1 = PIDController(P=-18, I=-0.01, D=0)
+#PID1 = PIDController(P=-15, I=-1, D=-1)
+
+
+PID1 = PIDController(P=-13, I=-1, D=-1)
 
 
 
 
-PID1.setTarget(7.5)
-targetvalue = 7 
+with open("./target_value.txt","r") as file:
+	targetvalue=float(file.read())
+PID1.setTarget(targetvalue)
 while True:
 	try:
 #		forward(30)
@@ -173,20 +177,31 @@ while True:
 		pid1 = PIDx
 #		print pid1	
 #		print targetvalue
+		PID1.setTarget(targetvalue)
 		if finished :
 			print kbdInput
 			finished = False
 			listener = threading.Thread(target=kbdListener)
 			listener.start()	
-		if kbdInput == "w":
+		if kbdInput == "t":
 			kbdInput = ""
 			targetvalue +=0.2
 			PID1.setTarget(targetvalue)
 
-		if kbdInput == "s":
+		if kbdInput == "g":
 			kbdInput=""
 			targetvalue -=0.2
 			PID1.setTarget(targetvalue)		
+		if kbdInput =="w":
+			kbdInput = ""
+			PID1.setTarget(targetvalue+5)
+		
+		if kbdInput =="s":
+			kbdInput = ""
+			PID1.setTarget(targetvalue-5)
+					
+
+
 
 		if pid1 > 100:
 			pid1 = 100
@@ -206,6 +221,8 @@ while True:
 		pwm_a.stop()
 		pwm_b.stop()
 		GPIO.cleanup()
+		with open("./target_value.txt","w") as file:
+			file.write(str(targetvalue))
 		exit()
 	
 
